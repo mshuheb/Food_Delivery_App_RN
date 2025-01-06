@@ -204,21 +204,11 @@ const cart = () => {
             <Text style={currentStyles.paymentText}>Pay Using Cash</Text>
             <Text style={currentStyles.paymentDescription}>Cash on Delivery</Text>
           </View>
-          {/* <Pressable
-            onPress={() => {
-              dispatch(cleanCart());
-              router.replace({
-                pathname: "/payment",
-                params: { name: params?.name, amount: total + 95 },
-              });
-            }}
-            style={currentStyles.placeOrderButton}
-          > */}
           <Pressable
             onPress={() => {
               dispatch(cleanCart());
               router.replace({
-                pathname: "/order",
+                pathname: "/payment",
                 params: { name: params?.name, amount: total + 95 },
               });
             }}
