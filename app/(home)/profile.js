@@ -8,6 +8,7 @@ import {
   Alert,
   TextInput,
   Modal,
+  ActivityIndicator,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
@@ -29,6 +30,7 @@ const UserProfileView = () => {
   const [editingPhoneNumber, setEditingPhoneNumber] = useState(false);
   const [newAddress, setNewAddress] = useState("");
   const [newPhoneNumber, setNewPhoneNumber] = useState("");
+  const [loading, setLoading] = useState(true);
 
 
   const router = useRouter();
@@ -74,6 +76,9 @@ const UserProfileView = () => {
         }
       } catch (error) {
         console.log("Error fetching user profile:", error);
+      }
+      finally {
+        setLoading(false); // Set loading to false once data is fetched
       }
     };
 
@@ -197,6 +202,15 @@ const UserProfileView = () => {
   const avatarSource = avatarImages[selectedImage] || avatarImages.default;
 
   return (
+    <View
+      style={[styles.container, { backgroundColor: isDarkMode ? "#121212" : "#f0f0f0" }]}
+    >
+      {loading ? (
+        // Full screen activity indicator
+        <View style={styles.loaderContainer}>
+          <ActivityIndicator size="large" color={isDarkMode ? "#ffffff" : "#000000"} />
+        </View>
+      ) : (
     <View
       style={[
         styles.container,
@@ -491,6 +505,8 @@ const UserProfileView = () => {
         </TouchableOpacity>
       </View>
     </View>
+      )}
+      </View>
   );
 };
 export default UserProfileView;

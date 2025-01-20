@@ -18,7 +18,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false); // Loading state
+  const [loading, setLoading] = useState(false); // Loading state for login action
+  const [screenLoading, setScreenLoading] = useState(true); // Loading state for the screen
   const [errorMessage, setErrorMessage] = useState("");
   const router = useRouter();
 
@@ -31,6 +32,8 @@ const Login = () => {
         }
       } catch (error) {
         console.log(error);
+      } finally {
+        setScreenLoading(false); // Once the login check is done, stop the screen loading indicator
       }
     };
 
@@ -59,10 +62,16 @@ const Login = () => {
     }
   }
 
+  if (screenLoading) {
+    return (
+      <SafeAreaView style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <ActivityIndicator size="large" color="#fd5c63" />
+      </SafeAreaView>
+    );
+  }
+
   return (
-    <SafeAreaView
-      style={{ flex: 1, backgroundColor: "white", alignItems: "center" }}
-    >
+    <SafeAreaView style={{ flex: 1, backgroundColor: "white", alignItems: "center" }}>
       <View style={{ marginTop: 50 }}>
         <Text style={{ fontSize: 20, textAlign: "center", fontWeight: "bold" }}>
           Food App
@@ -71,14 +80,7 @@ const Login = () => {
 
       <KeyboardAvoidingView>
         <View style={{ alignItems: "center" }}>
-          <Text
-            style={{
-              fontSize: 17,
-              fontWeight: "bold",
-              marginTop: 12,
-              color: "red",
-            }}
-          >
+          <Text style={{ fontSize: 17, fontWeight: "bold", marginTop: 12, color: "red" }}>
             Log in to your account
           </Text>
         </View>
@@ -100,12 +102,7 @@ const Login = () => {
               marginTop: 30,
             }}
           >
-            <MaterialIcons
-              style={{ marginLeft: 8 }}
-              name="email"
-              size={24}
-              color="gray"
-            />
+            <MaterialIcons style={{ marginLeft: 8 }} name="email" size={24} color="gray" />
             <TextInput
               value={email}
               onChangeText={(text) => setEmail(text)}
@@ -126,12 +123,7 @@ const Login = () => {
               marginTop: 30,
             }}
           >
-            <AntDesign
-              style={{ marginLeft: 8 }}
-              name="lock1"
-              size={24}
-              color="black"
-            />
+            <AntDesign style={{ marginLeft: 8 }} name="lock1" size={24} color="black" />
             <TextInput
               value={password}
               onChangeText={(text) => setPassword(text)}
@@ -166,7 +158,7 @@ const Login = () => {
             marginTop: 50,
           }}
         >
-          {loading ? ( // Show Activity Indicator during loading
+          {loading ? (
             <ActivityIndicator color="white" />
           ) : (
             <Text
@@ -182,13 +174,8 @@ const Login = () => {
           )}
         </Pressable>
 
-        <Pressable
-          onPress={() => router.replace("/register")}
-          style={{ marginTop: 15 }}
-        >
-          <Text
-            style={{ textAlign: "center", color: "gray", fontSize: 16 }}
-          >
+        <Pressable onPress={() => router.replace("/register")} style={{ marginTop: 15 }}>
+          <Text style={{ textAlign: "center", color: "gray", fontSize: 16 }}>
             Don't have an account? Sign Up
           </Text>
         </Pressable>
