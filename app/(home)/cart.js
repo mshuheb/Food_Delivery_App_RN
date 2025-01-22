@@ -15,7 +15,7 @@ import {
   MaterialCommunityIcons,
 } from "@expo/vector-icons";
 import { useDarkMode } from "../../DarkModeContext";
-import styles from '../../styles/cartStyles'; // Function-based styles
+import styles from "../../styles/cartStyles";
 
 const cart = () => {
   const params = useLocalSearchParams();
@@ -51,7 +51,8 @@ const cart = () => {
 
         <View style={currentStyles.deliveryInfo}>
           <Text style={{ color: isDarkMode ? "#ffffff" : "#000000" }}>
-            Delivery in <Text style={currentStyles.deliveryTime}>35 - 40 mins</Text>
+            Delivery in{" "}
+            <Text style={currentStyles.deliveryTime}>35 - 40 mins</Text>
           </Text>
         </View>
 
@@ -69,7 +70,9 @@ const cart = () => {
                     <Text style={currentStyles.quantityButton}>-</Text>
                   </Pressable>
                   <Pressable>
-                    <Text style={currentStyles.quantityText}>{item.quantity}</Text>
+                    <Text style={currentStyles.quantityText}>
+                      {item.quantity}
+                    </Text>
                   </Pressable>
                   <Pressable onPress={() => dispatch(incrementQuantity(item))}>
                     <Text style={currentStyles.quantityButton}>+</Text>
@@ -93,14 +96,19 @@ const cart = () => {
             </Text>
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
               {instructions?.map((item, index) => (
-                <Pressable style={currentStyles.instructionContainer} key={index}>
+                <Pressable
+                  style={currentStyles.instructionContainer}
+                  key={index}
+                >
                   <View style={currentStyles.instructionContent}>
                     <FontAwesome5
                       name={item?.iconName}
                       size={22}
                       color={"gray"}
                     />
-                    <Text style={currentStyles.instructionText}>{item?.name}</Text>
+                    <Text style={currentStyles.instructionText}>
+                      {item?.name}
+                    </Text>
                   </View>
                 </Pressable>
               ))}
@@ -163,7 +171,9 @@ const cart = () => {
 
           <View style={currentStyles.donationContainer}>
             <View style={currentStyles.donationRow}>
-              <Text style={currentStyles.donationText}>Feeding India Donation</Text>
+              <Text style={currentStyles.donationText}>
+                Feeding India Donation
+              </Text>
               <AntDesign name="checksquare" size={24} color="#fd5c63" />
             </View>
             <View style={currentStyles.donationRow}>
@@ -175,7 +185,9 @@ const cart = () => {
           </View>
 
           <View style={currentStyles.billingDetails}>
-            <Text style={currentStyles.billingDetailsText}>Billing Details</Text>
+            <Text style={currentStyles.billingDetailsText}>
+              Billing Details
+            </Text>
             <View style={currentStyles.billingContainer}>
               <View style={currentStyles.billingRow}>
                 <Text style={currentStyles.billingLabel}>Item Total</Text>
@@ -186,12 +198,16 @@ const cart = () => {
                 <Text style={currentStyles.billingValue}>₹15.00</Text>
               </View>
               <View style={currentStyles.billingRow}>
-                <Text style={currentStyles.billingLabel}>Delivery Partner Fee</Text>
+                <Text style={currentStyles.billingLabel}>
+                  Delivery Partner Fee
+                </Text>
                 <Text style={currentStyles.billingValue}>₹75</Text>
               </View>
               <View style={currentStyles.billingRow}>
                 <Text style={currentStyles.billingTotalLabel}>To pay</Text>
-                <Text style={currentStyles.billingTotalValue}>₹{total + 90}</Text>
+                <Text style={currentStyles.billingTotalValue}>
+                  ₹{total + 90}
+                </Text>
               </View>
             </View>
           </View>
@@ -202,7 +218,9 @@ const cart = () => {
         <Pressable style={currentStyles.paymentContainer}>
           <View>
             <Text style={currentStyles.paymentText}>Pay Using Cash</Text>
-            <Text style={currentStyles.paymentDescription}>Cash on Delivery</Text>
+            <Text style={currentStyles.paymentDescription}>
+              Cash on Delivery
+            </Text>
           </View>
           <Pressable
             onPress={() => {

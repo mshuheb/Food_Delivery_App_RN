@@ -593,7 +593,9 @@ const Index = () => {
           onPress={() => router.push("/profile")}
         >
           <Image
-            source={selectedImage ? avatarImages[selectedImage] : avatarImages.default}
+            source={
+              selectedImage ? avatarImages[selectedImage] : avatarImages.default
+            }
             style={styles.avatar}
           />
         </Pressable>
@@ -645,7 +647,10 @@ const Index = () => {
       <ScrollView horizontal showsHorizontalScrollIndicator={false}>
         {items.map((item, index) => (
           <View key={index} style={styles.smallCard}>
-            <Image style={{ width: 50, height: 50 }} source={{ uri: item.image }} />
+            <Image
+              style={{ width: 50, height: 50 }}
+              source={{ uri: item.image }}
+            />
             <Text style={styles.smallCardText}>{item.name}</Text>
             <Text style={styles.smallCardSubText}>{item.description}</Text>
           </View>

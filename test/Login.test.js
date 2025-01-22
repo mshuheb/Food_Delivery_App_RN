@@ -8,25 +8,25 @@ import { useRouter } from "expo-router";
 
 // Mock external modules
 jest.mock("../supabase");
-jest.mock('@react-native-async-storage/async-storage', () => ({
-    getItem: jest.fn(),
-    setItem: jest.fn(),
-    removeItem: jest.fn(),
-    clear: jest.fn(),
+jest.mock("@react-native-async-storage/async-storage", () => ({
+  getItem: jest.fn(),
+  setItem: jest.fn(),
+  removeItem: jest.fn(),
+  clear: jest.fn(),
 }));
 jest.mock("expo-router", () => ({
   useRouter: jest.fn(),
 }));
 
 // Mock expo-vector-icons
-jest.mock('@expo/vector-icons', () => ({
-  AntDesign: 'AntDesign',  // Mocking icon
-  MaterialIcons: 'MaterialIcons',  // Mocking icon
-  FontAwesome: 'FontAwesome',  // Mocking icon
+jest.mock("@expo/vector-icons", () => ({
+  AntDesign: "AntDesign", // Mocking icon
+  MaterialIcons: "MaterialIcons", // Mocking icon
+  FontAwesome: "FontAwesome", // Mocking icon
 }));
 
 // Mock Alert
-jest.spyOn(Alert, 'alert').mockImplementation(() => {});
+jest.spyOn(Alert, "alert").mockImplementation(() => {});
 
 describe("<Login />", () => {
   let routerMock;
@@ -92,7 +92,9 @@ describe("<Login />", () => {
         email: "wrong@example.com",
         password: "wrongpassword",
       });
-      expect(Alert.alert).toHaveBeenCalledWith("Invalid email or password. Please try again.");
+      expect(Alert.alert).toHaveBeenCalledWith(
+        "Invalid email or password. Please try again."
+      );
     });
 
     // Snapshot test
@@ -119,8 +121,14 @@ describe("<Login />", () => {
         email: "test@example.com",
         password: "password123",
       });
-      expect(AsyncStorage.setItem).toHaveBeenCalledWith("authToken", "test_token");
-      expect(AsyncStorage.setItem).toHaveBeenCalledWith("userEmail", "test@example.com");
+      expect(AsyncStorage.setItem).toHaveBeenCalledWith(
+        "authToken",
+        "test_token"
+      );
+      expect(AsyncStorage.setItem).toHaveBeenCalledWith(
+        "userEmail",
+        "test@example.com"
+      );
       expect(routerMock.replace).toHaveBeenCalledWith("/(home)");
     });
 

@@ -1,19 +1,23 @@
-import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, ActivityIndicator } from 'react-native';
-import { WebView } from 'react-native-webview';
-import { useNavigation } from '@react-navigation/native';
+import React, { useState } from "react";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  ActivityIndicator,
+} from "react-native";
+import { WebView } from "react-native-webview";
+import { useNavigation } from "@react-navigation/native";
 import { useLocalSearchParams } from "expo-router";
-import { RAZORPAY_KEY_ID } from '@env';
+import { RAZORPAY_KEY_ID } from "@env";
 
 const RazorpayPaymentScreen = () => {
   const [showWebView, setShowWebView] = useState(false);
-  const [paymentUrl, setPaymentUrl] = useState('');
+  const [paymentUrl, setPaymentUrl] = useState("");
 
   const navigation = useNavigation();
 
-  //const razorpayKeyId = 'rzp_test_mAqQXpyTbeOUUb'; // Replace with your Razorpay Key ID
-  //const amount = 100; // Amount in paise (100 paise = 1 INR)
-  const currency = 'INR';
+  const currency = "INR";
   const params = useLocalSearchParams();
   const amount = params?.amount * 100; // Convert amount to paise
   const name = params?.name;
@@ -29,15 +33,15 @@ const RazorpayPaymentScreen = () => {
   const handleWebViewNavigationStateChange = (navState) => {
     const { url } = navState;
 
-    if (url.includes('redirect_callback')) {
+    if (url.includes("redirect_callback")) {
       //alert('Payment Successful!');
       setTimeout(() => {
-        navigation.replace('order', {
+        navigation.replace("order", {
           name, // Pass restaurant name
         });
       }, 3000); // Wait 3 seconds before navigating to the Order screen
       //setShowWebView(false);
-    } 
+    }
   };
 
   return (
@@ -47,13 +51,17 @@ const RazorpayPaymentScreen = () => {
           source={{ uri: paymentUrl }}
           onNavigationStateChange={handleWebViewNavigationStateChange}
           startInLoadingState={true}
-          renderLoading={() => <ActivityIndicator size="large" color="#0000ff" />}
+          renderLoading={() => (
+            <ActivityIndicator size="large" color="#0000ff" />
+          )}
         />
       ) : (
         <View style={styles.paymentContainer}>
           <Text style={styles.title}>Razorpay Payment Gateway</Text>
           <TouchableOpacity style={styles.button} onPress={startPayment}>
-            <Text style={styles.buttonText}>Pay ₹{params?.amount} to {name}</Text>
+            <Text style={styles.buttonText}>
+              Pay ₹{params?.amount} to {name}
+            </Text>
           </TouchableOpacity>
         </View>
       )}
@@ -67,22 +75,22 @@ const styles = StyleSheet.create({
   },
   paymentContainer: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   title: {
     fontSize: 24,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 20,
   },
   button: {
-    backgroundColor: '#fd5c63',
+    backgroundColor: "#fd5c63",
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 5,
   },
   buttonText: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 18,
   },
 });

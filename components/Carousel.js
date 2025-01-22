@@ -1,7 +1,7 @@
-import { StyleSheet, View, ScrollView, Image, Dimensions } from 'react-native';
-import React from 'react';
+import { StyleSheet, View, ScrollView, Image, Dimensions } from "react-native";
+import React from "react";
 
-const { width } = Dimensions.get('window');
+const { width } = Dimensions.get("window");
 
 const Carousel = () => {
   const images = [
@@ -10,19 +10,24 @@ const Carousel = () => {
   ];
 
   return (
-    <View style={styles.container}>   
-      <ScrollView 
-        horizontal 
-        pagingEnabled 
-        showsHorizontalScrollIndicator={false} 
+    <View style={styles.container}>
+      <ScrollView
+        horizontal
+        pagingEnabled
+        showsHorizontalScrollIndicator={false}
         style={styles.scrollView}
       >
         {images.map((image, index) => (
-          <Image 
-            key={index} 
-            source={{ uri: image }} 
-            style={styles.image} 
-            onError={(error) => console.log(`Error loading image ${index}:`, error.nativeEvent.error)}
+          <Image
+            key={index}
+            source={{ uri: image }}
+            style={styles.image}
+            onError={(error) =>
+              console.log(
+                `Error loading image ${index}:`,
+                error.nativeEvent.error
+              )
+            }
           />
         ))}
       </ScrollView>
@@ -35,11 +40,11 @@ export default Carousel;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   scrollView: {
-    width: '100%',
+    width: "100%",
     marginTop: 15,
   },
   image: {

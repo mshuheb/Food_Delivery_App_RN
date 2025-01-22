@@ -2,7 +2,12 @@ import { Image, Pressable, Text, View } from "react-native";
 import React, { useState } from "react";
 import { FontAwesome } from "@expo/vector-icons";
 import { useDispatch } from "react-redux";
-import { addToCart, decrementQuantity, incrementQuantity, removeFromCart } from "../redux/CartReducer";
+import {
+  addToCart,
+  decrementQuantity,
+  incrementQuantity,
+  removeFromCart,
+} from "../redux/CartReducer";
 import { useDarkMode } from "../DarkModeContext";
 import getStyles from "../styles/menuItemStyles";
 

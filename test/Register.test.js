@@ -74,7 +74,10 @@ describe("<Register />", () => {
         email: "test@example.com",
         password: "password123",
       });
-      expect(Alert.alert).toHaveBeenCalledWith("Error while registering", "Please try again");
+      expect(Alert.alert).toHaveBeenCalledWith(
+        "Error while registering",
+        "Please try again"
+      );
     });
 
     // Snapshot test

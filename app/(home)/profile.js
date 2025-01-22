@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from "react";
 import {
-  StyleSheet,
   Text,
   View,
   Image,
   TouchableOpacity,
   Alert,
   TextInput,
-  Modal,
   ActivityIndicator,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
@@ -16,7 +14,6 @@ import { useDarkMode } from "../../DarkModeContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { supabase } from "../../supabase";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-import { Menu, Divider } from "react-native-paper"; // Add this for the menu
 import styles from "../../styles/profileStyles";
 
 const UserProfileView = () => {
@@ -31,7 +28,6 @@ const UserProfileView = () => {
   const [newAddress, setNewAddress] = useState("");
   const [newPhoneNumber, setNewPhoneNumber] = useState("");
   const [loading, setLoading] = useState(true);
-
 
   const router = useRouter();
   const { isDarkMode } = useDarkMode();
@@ -76,8 +72,7 @@ const UserProfileView = () => {
         }
       } catch (error) {
         console.log("Error fetching user profile:", error);
-      }
-      finally {
+      } finally {
         setLoading(false); // Set loading to false once data is fetched
       }
     };
@@ -203,312 +198,317 @@ const UserProfileView = () => {
 
   return (
     <View
-      style={[styles.container, { backgroundColor: isDarkMode ? "#121212" : "#f0f0f0" }]}
-    >
-      {loading ? (
-        // Full screen activity indicator
-        <View style={styles.loaderContainer}>
-          <ActivityIndicator size="large" color={isDarkMode ? "#ffffff" : "#000000"} />
-        </View>
-      ) : (
-    <View
       style={[
         styles.container,
         { backgroundColor: isDarkMode ? "#121212" : "#f0f0f0" },
       ]}
     >
-      <View style={styles.iconContainer}>
-        <Ionicons
-          onPress={() => router.back()}
-          style={styles.icon}
-          name="arrow-back"
-          size={24}
-          color={isDarkMode ? "#ffffff" : "#000000"}
-        />
-      </View>
-
-      <View style={styles.centerContent}>
+      {loading ? (
+        // Full screen activity indicator
+        <View style={styles.loaderContainer}>
+          <ActivityIndicator
+            size="large"
+            color={isDarkMode ? "#ffffff" : "#000000"}
+          />
+        </View>
+      ) : (
         <View
           style={[
-            styles.card,
-            { backgroundColor: isDarkMode ? "#1e1e1e" : "#ffffff" },
+            styles.container,
+            { backgroundColor: isDarkMode ? "#121212" : "#f0f0f0" },
           ]}
         >
-          <View style={styles.avatarContainer}>
-            <Image style={styles.avatar} source={avatarSource} />
+          <View style={styles.iconContainer}>
+            <Ionicons
+              onPress={() => router.back()}
+              style={styles.icon}
+              name="arrow-back"
+              size={24}
+              color={isDarkMode ? "#ffffff" : "#000000"}
+            />
           </View>
-          <Text
-            style={[
-              styles.cardText,
-              { color: isDarkMode ? "#ffffff" : "#000000" },
-            ]}
-          >
-            Welcome, {userName}!
-          </Text>
-          <View style={styles.divider} />
-          <Text
-            style={[
-              styles.headerText,
-              { color: isDarkMode ? "#ffffff" : "#000000" },
-            ]}
-          >
-            Email
-          </Text>
-          <Text
-            style={[
-              styles.detailText,
-              { color: isDarkMode ? "#ffffff" : "#000000", fontWeight: "bold" },
-            ]}
-          >
-            {userEmail}
-          </Text>
-          <View style={styles.divider} />
-          <View style={styles.row}>
-            <Text
+
+          <View style={styles.centerContent}>
+            <View
               style={[
-                styles.headerText,
-                { color: isDarkMode ? "#ffffff" : "#000000" },
+                styles.card,
+                { backgroundColor: isDarkMode ? "#1e1e1e" : "#ffffff" },
               ]}
             >
-              Gender
-            </Text>
+              <View style={styles.avatarContainer}>
+                <Image style={styles.avatar} source={avatarSource} />
+              </View>
+              <Text
+                style={[
+                  styles.cardText,
+                  { color: isDarkMode ? "#ffffff" : "#000000" },
+                ]}
+              >
+                Welcome, {userName}!
+              </Text>
+              <View style={styles.divider} />
+              <Text
+                style={[
+                  styles.headerText,
+                  { color: isDarkMode ? "#ffffff" : "#000000" },
+                ]}
+              >
+                Email
+              </Text>
+              <Text
+                style={[
+                  styles.detailText,
+                  {
+                    color: isDarkMode ? "#ffffff" : "#000000",
+                    fontWeight: "bold",
+                  },
+                ]}
+              >
+                {userEmail}
+              </Text>
+              <View style={styles.divider} />
+              <View style={styles.row}>
+                <Text
+                  style={[
+                    styles.headerText,
+                    { color: isDarkMode ? "#ffffff" : "#000000" },
+                  ]}
+                >
+                  Gender
+                </Text>
+                <TouchableOpacity
+                  style={[
+                    styles.genderChangeButton,
+                    { backgroundColor: isDarkMode ? "#000000" : "#ffffff" },
+                  ]}
+                  onPress={() =>
+                    handleGenderSelection(gender === "male" ? "female" : "male")
+                  }
+                >
+                  <MaterialIcons
+                    name="change-circle"
+                    size={30}
+                    color={isDarkMode ? "#ffffff" : "#000000"}
+                  />
+                </TouchableOpacity>
+              </View>
+              <Text
+                style={[
+                  styles.detailText,
+                  {
+                    color: isDarkMode ? "#ffffff" : "#000000",
+                    fontWeight: "bold",
+                  },
+                ]}
+              >
+                {gender || "Not set"}
+              </Text>
+              <View style={styles.divider} />
+
+              <View style={styles.row}>
+                <Text
+                  style={[
+                    styles.headerText,
+                    { color: isDarkMode ? "#ffffff" : "#000000" },
+                  ]}
+                >
+                  Address
+                </Text>
+                <Text
+                  style={[
+                    styles.detailText,
+                    {
+                      color: isDarkMode ? "#ffffff" : "#000000",
+                      fontWeight: "bold",
+                    },
+                  ]}
+                >
+                  {address || "Not set"}
+                </Text>
+                {address && (
+                  <TouchableOpacity
+                    style={styles.menuButton}
+                    onPress={() =>
+                      Alert.alert("Modify Address", "Choose an action", [
+                        {
+                          text: "Edit",
+                          onPress: () => setEditingAddress(true),
+                        },
+                        {
+                          text: "Delete",
+                          onPress: () => {
+                            handleAddressDelete();
+                          },
+                          style: "destructive",
+                        },
+                        { text: "Cancel", style: "cancel" },
+                      ])
+                    }
+                  >
+                    <MaterialIcons
+                      name="more-vert"
+                      size={24}
+                      color={isDarkMode ? "#ffffff" : "#000000"}
+                    />
+                  </TouchableOpacity>
+                )}
+              </View>
+
+              {editingAddress ? (
+                <View style={{ marginTop: 10 }}>
+                  <TextInput
+                    style={[styles.input, { backgroundColor: "#ffffff" }]}
+                    placeholder="Enter your address"
+                    placeholderTextColor="#888"
+                    value={newAddress || address}
+                    onChangeText={setNewAddress}
+                  />
+                  <TouchableOpacity
+                    style={[styles.button, { backgroundColor: "#fd5c63" }]}
+                    onPress={() => {
+                      if (newAddress.trim()) {
+                        handleAddressUpdate();
+                      } else {
+                        Alert.alert(
+                          "Address is required",
+                          "Please enter a valid address."
+                        );
+                      }
+                    }}
+                  >
+                    <Text style={[styles.buttonText, { color: "#ffffff" }]}>
+                      Save Address
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              ) : (
+                !address && (
+                  <TouchableOpacity
+                    onPress={() => setEditingAddress(true)}
+                    style={[styles.button, { backgroundColor: "#fd5c63" }]}
+                  >
+                    <Text style={[styles.buttonText, { color: "#ffffff" }]}>
+                      +Add Address
+                    </Text>
+                  </TouchableOpacity>
+                )
+              )}
+
+              <View style={styles.divider} />
+
+              <View style={styles.row}>
+                <Text
+                  style={[
+                    styles.headerText,
+                    { color: isDarkMode ? "#ffffff" : "#000000" },
+                  ]}
+                >
+                  Phone Number
+                </Text>
+                <Text
+                  style={[
+                    styles.detailText,
+                    {
+                      color: isDarkMode ? "#ffffff" : "#000000",
+                      fontWeight: "bold",
+                    },
+                  ]}
+                >
+                  {phoneNumber || "Not set"}
+                </Text>
+
+                {phoneNumber && (
+                  <TouchableOpacity
+                    style={styles.menuButton}
+                    onPress={() =>
+                      Alert.alert("Modify Phone Number", "Choose an action", [
+                        {
+                          text: "Edit",
+                          onPress: () => setEditingPhoneNumber(true),
+                        },
+                        {
+                          text: "Delete",
+                          onPress: () => {
+                            handlePhoneNumberDelete();
+                          },
+                          style: "destructive",
+                        },
+                        { text: "Cancel", style: "cancel" },
+                      ])
+                    }
+                  >
+                    <MaterialIcons
+                      name="more-vert"
+                      size={24}
+                      color={isDarkMode ? "#ffffff" : "#000000"}
+                    />
+                  </TouchableOpacity>
+                )}
+              </View>
+
+              {editingPhoneNumber ? (
+                <View style={{ marginTop: 10 }}>
+                  <TextInput
+                    style={[styles.input, { backgroundColor: "#ffffff" }]}
+                    placeholder="Enter your phone number"
+                    placeholderTextColor="#888"
+                    value={newPhoneNumber || phoneNumber}
+                    onChangeText={setNewPhoneNumber}
+                    keyboardType="phone-pad"
+                  />
+                  <TouchableOpacity
+                    style={[styles.button, { backgroundColor: "#fd5c63" }]}
+                    onPress={() => {
+                      if (newPhoneNumber.trim()) {
+                        handlePhoneNumberUpdate();
+                      } else {
+                        Alert.alert(
+                          "Phone Number is required",
+                          "Please enter a valid phone number."
+                        );
+                      }
+                    }}
+                  >
+                    <Text style={[styles.buttonText, { color: "#ffffff" }]}>
+                      Save Phone Number
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              ) : (
+                !phoneNumber && (
+                  <TouchableOpacity
+                    onPress={() => setEditingPhoneNumber(true)}
+                    style={[styles.button, { backgroundColor: "#fd5c63" }]}
+                  >
+                    <Text style={[styles.buttonText, { color: "#ffffff" }]}>
+                      +Add Phone Number
+                    </Text>
+                  </TouchableOpacity>
+                )
+              )}
+            </View>
+
             <TouchableOpacity
               style={[
-                styles.genderChangeButton,
-                { backgroundColor: isDarkMode ? "#000000" : "#ffffff" },
+                styles.button,
+                {
+                  backgroundColor: "#fd5c63",
+                  borderColor: "white",
+                },
               ]}
-              onPress={() =>
-                handleGenderSelection(gender === "male" ? "female" : "male")
-              }
+              onPress={handleLogout}
             >
-              <MaterialIcons
-                name="change-circle"
-                size={30}
-                color={isDarkMode ? "#ffffff" : "#000000"}
-              />
+              <Text
+                style={[styles.buttonText, { color: "white", marginRight: 8 }]}
+              >
+                Logout
+              </Text>
+              <MaterialIcons name="logout" size={20} color="white" />
             </TouchableOpacity>
           </View>
-          <Text
-            style={[
-              styles.detailText,
-              { color: isDarkMode ? "#ffffff" : "#000000", fontWeight: "bold" },
-            ]}
-          >
-            {gender || "Not set"}
-          </Text>
-          <View style={styles.divider} />
-
-          {/* Address Section */}
-          {/* Address Section */}
-<View style={styles.row}>
-  <Text
-    style={[
-      styles.headerText,
-      { color: isDarkMode ? "#ffffff" : "#000000" },
-    ]}
-  >
-    Address
-  </Text>
-  <Text
-    style={[
-      styles.detailText,
-      {
-        color: isDarkMode ? "#ffffff" : "#000000",
-        fontWeight: "bold",
-      },
-    ]}
-  >
-    {address || "Not set"}
-  </Text>
-  {address && (
-    <TouchableOpacity
-      style={styles.menuButton}
-      onPress={() =>
-        Alert.alert("Modify Address", "Choose an action", [
-          { text: "Edit", onPress: () => setEditingAddress(true) },
-          {
-            text: "Delete",
-            onPress: () => {
-              handleAddressDelete();
-            },
-            style: "destructive",
-          },
-          { text: "Cancel", style: "cancel" },
-        ])
-      }
-    >
-      <MaterialIcons
-        name="more-vert"
-        size={24}
-        color={isDarkMode ? "#ffffff" : "#000000"}
-      />
-    </TouchableOpacity>
-  )}
-</View>
-
-{editingAddress ? (
-  <View style={{ marginTop: 10 }}>
-    <TextInput
-      style={[styles.input, { backgroundColor: "#ffffff" }]}
-      placeholder="Enter your address"
-      placeholderTextColor="#888"
-      value={newAddress || address} // Display current address or new input
-      onChangeText={setNewAddress}
-    />
-    <TouchableOpacity
-      style={[styles.button, { backgroundColor: "#fd5c63" }]}
-      onPress={() => {
-        // Only save the address if there is a valid input
-        if (newAddress.trim()) {
-          handleAddressUpdate();
-        } else {
-          Alert.alert("Address is required", "Please enter a valid address.");
-        }
-      }}
-    >
-      <Text style={[styles.buttonText, { color: "#ffffff" }]}>
-        Save Address
-      </Text>
-    </TouchableOpacity>
-  </View>
-) : (
-  !address && (
-    <TouchableOpacity
-      onPress={() => setEditingAddress(true)}
-      style={[styles.button, { backgroundColor: "#fd5c63" }]}
-    >
-      <Text style={[styles.buttonText, { color: "#ffffff" }]}>
-        +Add Address
-      </Text>
-    </TouchableOpacity>
-  )
-)}
-
-
-          <View style={styles.divider} />
-
-          {/* Phone Number Section */}
-          {/* Phone Number Section */}
-<View style={styles.row}>
-  <Text
-    style={[
-      styles.headerText,
-      { color: isDarkMode ? "#ffffff" : "#000000" },
-    ]}
-  >
-    Phone Number
-  </Text>
-  <Text
-    style={[
-      styles.detailText,
-      {
-        color: isDarkMode ? "#ffffff" : "#000000",
-        fontWeight: "bold",
-      },
-    ]}
-  >
-    {phoneNumber || "Not set"}
-  </Text>
-
-  {phoneNumber && (
-    <TouchableOpacity
-      style={styles.menuButton}
-      onPress={() =>
-        Alert.alert("Modify Phone Number", "Choose an action", [
-          {
-            text: "Edit",
-            onPress: () => setEditingPhoneNumber(true),
-          },
-          {
-            text: "Delete",
-            onPress: () => {
-              handlePhoneNumberDelete();
-            },
-            style: "destructive",
-          },
-          { text: "Cancel", style: "cancel" },
-        ])
-      }
-    >
-      <MaterialIcons
-        name="more-vert"
-        size={24}
-        color={isDarkMode ? "#ffffff" : "#000000"}
-      />
-    </TouchableOpacity>
-  )}
-</View>
-
-{editingPhoneNumber ? (
-  <View style={{ marginTop: 10 }}>
-    <TextInput
-      style={[styles.input, { backgroundColor: "#ffffff" }]}
-      placeholder="Enter your phone number"
-      placeholderTextColor="#888"
-      value={newPhoneNumber || phoneNumber} // Display current phone number or input
-      onChangeText={setNewPhoneNumber}
-      keyboardType="phone-pad"
-    />
-    <TouchableOpacity
-      style={[styles.button, { backgroundColor: "#fd5c63" }]}
-      onPress={() => {
-        // Only save the phone number if it's valid
-        if (newPhoneNumber.trim()) {
-          handlePhoneNumberUpdate();
-        } else {
-          Alert.alert("Phone Number is required", "Please enter a valid phone number.");
-        }
-      }}
-    >
-      <Text style={[styles.buttonText, { color: "#ffffff" }]}>
-        Save Phone Number
-      </Text>
-    </TouchableOpacity>
-  </View>
-) : (
-  !phoneNumber && (
-    <TouchableOpacity
-      onPress={() => setEditingPhoneNumber(true)}
-      style={[styles.button, { backgroundColor: "#fd5c63" }]}
-    >
-      <Text style={[styles.buttonText, { color: "#ffffff" }]}>
-        +Add Phone Number
-      </Text>
-    </TouchableOpacity>
-  )
-)}
-</View>
-
-        <TouchableOpacity
-          style={[
-            styles.button,
-            {
-              backgroundColor: "#fd5c63",
-              borderColor: "white",
-            },
-          ]}
-          onPress={handleLogout}
-        >
-          <Text
-            style={[
-              styles.buttonText,
-              { color: "white", marginRight: 8 },
-            ]}
-          >
-            Logout
-          </Text>
-          <MaterialIcons
-            name="logout"
-            size={20}
-            color="white"
-          />
-        </TouchableOpacity>
-      </View>
-    </View>
+        </View>
       )}
-      </View>
+    </View>
   );
 };
 export default UserProfileView;
-
-

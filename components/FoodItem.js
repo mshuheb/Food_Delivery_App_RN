@@ -1,8 +1,8 @@
-import { Pressable, StyleSheet, Text, View } from 'react-native';
-import React, { useState } from 'react';
-import { AntDesign } from '@expo/vector-icons';
-import MenuItem from './MenuItem';
-import { useDarkMode } from '../DarkModeContext';
+import { Pressable, StyleSheet, Text, View } from "react-native";
+import React, { useState } from "react";
+import { AntDesign } from "@expo/vector-icons";
+import MenuItem from "./MenuItem";
+import { useDarkMode } from "../DarkModeContext";
 
 const FoodItem = ({ item }) => {
   const { isDarkMode } = useDarkMode();
@@ -27,11 +27,10 @@ const FoodItem = ({ item }) => {
         />
       </Pressable>
 
-      {isExpanded && (
+      {isExpanded &&
         item?.items?.map((menuItem, idx) => (
           <MenuItem key={idx} item={menuItem} />
-        ))
-      )}
+        ))}
     </View>
   );
 };

@@ -5,10 +5,10 @@ import {
   TouchableOpacity,
   Pressable,
 } from "react-native";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useLocalSearchParams } from "expo-router";
 import moment from "moment";
-import { Ionicons, FontAwesome5 } from "@expo/vector-icons";
+import { FontAwesome5 } from "@expo/vector-icons";
 import { useDarkMode } from "../../DarkModeContext";
 import { Video } from "expo-av";
 
@@ -19,7 +19,8 @@ const order = () => {
   const { isDarkMode } = useDarkMode();
 
   // Reference the local video file using require
-  const videoUri = "https://xkveywmtbhzcgmdvtvjq.supabase.co/storage/v1/object/public/Assets/Food%20Delivery.mp4" // Path to your local video
+  const videoUri =
+    "https://xkveywmtbhzcgmdvtvjq.supabase.co/storage/v1/object/public/Assets/Food%20Delivery.mp4"; // Path to your local video
 
   return (
     <SafeAreaView>

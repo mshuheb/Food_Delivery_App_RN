@@ -1,6 +1,6 @@
-import { ImageBackground, Pressable, Animated } from 'react-native';
-import React, { useEffect, useRef } from 'react';
-import { useRouter } from 'expo-router';
+import { ImageBackground, Pressable, Animated } from "react-native";
+import React, { useEffect, useRef } from "react";
+import { useRouter } from "expo-router";
 
 const start = () => {
   const router = useRouter();
@@ -25,22 +25,27 @@ const start = () => {
     ]).start(() => {
       // After animation, redirect to login page
       // Use router.replace to avoid splash screen in the stack
-      router.replace('/login');
+      router.replace("/login");
     });
   }, []);
-  
 
   return (
     <Pressable style={{ flex: 1 }}>
       {/* Animated Logo */}
-      <Animated.View style={{ flex: 1, opacity: fadeAnim, transform: [{ scale: scaleAnim }] }}>
+      <Animated.View
+        style={{
+          flex: 1,
+          opacity: fadeAnim,
+          transform: [{ scale: scaleAnim }],
+        }}
+      >
         <ImageBackground
-          source={require('../../assets/start.png')}
-          style={{ flex: 1, resizeMode: 'cover' }} // To cover the entire screen
+          source={require("../../assets/start.png")}
+          style={{ flex: 1, resizeMode: "cover" }} // To cover the entire screen
         />
       </Animated.View>
     </Pressable>
   );
-}
+};
 
 export default start;
